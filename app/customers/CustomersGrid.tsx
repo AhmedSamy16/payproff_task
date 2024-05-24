@@ -1,22 +1,22 @@
 "use client";
 
 import { Box } from "@mui/material";
-import { DataGrid, GridCellParams } from "@mui/x-data-grid";
+import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
 
 type Props = {
   data: Customer[];
 };
 
 const CustomersGrid = ({ data }: Props) => {
-  const columns = [
+  const columns: GridColDef<Customer>[] = [
     { field: "fullName", headerName: "Full name", flex: 1 },
     { field: "city", headerName: "City", flex: 1 },
     { field: "email", headerName: "Email", flex: 1 },
     {
       field: "totalSpent",
       headerName: "Total Spent",
-      flex: 1,
-      renderCell: (params: GridCellParams) => `$${params.value}`,
+      flex: 0.5,
+      renderCell: (params: GridCellParams) => `$${params.value}  `,
     },
   ];
   return (

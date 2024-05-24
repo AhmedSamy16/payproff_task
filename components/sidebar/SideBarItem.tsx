@@ -23,7 +23,7 @@ const SideBarItem = ({ icon, text, to }: Props) => {
           : "hover:bg-indigo-50 text-gray-600"
       }`}
     >
-      <Link href={to} className="inline-block overflow-hidden">
+      <Link href={to} className="flex items-center overflow-hidden">
         {icon}
         <span
           className={`inline-block overflow-hidden transition-all ${

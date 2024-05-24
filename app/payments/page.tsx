@@ -1,5 +1,7 @@
+import PaymentsGrid from "./PaymentsGrid";
+
 const PaymentsPage = () => {
-  return <div>PaymentsPage</div>;
+  return <PaymentsGrid />;
 };
 
 export default PaymentsPage;
