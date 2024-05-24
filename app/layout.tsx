@@ -21,9 +21,17 @@ export default function RootLayout({
     <html lang="en">
       <body className="flex">
         <SideBar>
-          <SideBarItem icon={<PeopleAltIcon />} text="Customers" active />
-          <SideBarItem icon={<AttachMoneyIcon />} text="Payments" />
-          <SideBarItem icon={<BarChartIcon />} text="Overview" />
+          <SideBarItem to="/" icon={<BarChartIcon />} text="Overview" />
+          <SideBarItem
+            to="/customers"
+            icon={<PeopleAltIcon />}
+            text="Customers"
+          />
+          <SideBarItem
+            to="/payments"
+            icon={<AttachMoneyIcon />}
+            text="Payments"
+          />
         </SideBar>
         {children}
       </body>
