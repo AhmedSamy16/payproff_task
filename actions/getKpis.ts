@@ -1,5 +1,6 @@
 "use server";
 
+import connectDB from "@/utils/db";
 import { KPIs } from "@/utils/kpis";
 
 const getKpis = async (
@@ -7,7 +8,6 @@ const getKpis = async (
   month: string = "",
   day: number = -1
 ) => {
-  console.log(year, month, year);
   // @ts-ignore
   let data = KPIs.earned[year];
   if (data && month) {
@@ -18,7 +18,19 @@ const getKpis = async (
     }
   }
 
-  return JSON.stringify(data ?? {});
+  let formattedData = {};
+
+  if (data) {
+    const total = data.totalEarned;
+    delete data.totalEarned;
+
+    formattedData = {
+      totalEarned: total,
+      history: data,
+    };
+  }
+
+  return JSON.stringify(formattedData);
 };
 
 export default getKpis;

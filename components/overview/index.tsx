@@ -1,11 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import OverviewBox from "./OverviewBox";
 import getOverview from "@/actions/getOverview";
 import OverviewSelectBox from "./OverviewSelectBox";
 import getKpis from "@/actions/getKpis";
 import formatMoney from "@/utils/formatMoney";
+import {
+  CartesianGrid,
+  LineChart,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Line,
+} from "recharts";
+import months from "@/utils/months";
 
 type OverviewData = {
   totalCustomers: number;
@@ -34,6 +44,18 @@ const Overview = () => {
     month: "",
     day: -1,
   });
+
+  const chartsData = useMemo(() => {
+    return (
+      kpisData.history &&
+      Object.entries(kpisData.history)
+        .sort((a, b) => months.indexOf(a[0]) - months.indexOf(b[0]))
+        .map(([key, value]) => ({
+          name: key,
+          earned: value.totalEarned,
+        }))
+    );
+  }, [kpisData]);
 
   useEffect(() => {
     const fetchOverview = async () => {
@@ -93,7 +115,8 @@ const Overview = () => {
             amount={
               isKpisDataLoading
                 ? "loading..."
-                : formatMoney(kpisData["totalEarned"]?.toFixed(2) ?? 0)
+                : // @ts-ignore
+                  formatMoney(kpisData["totalEarned"]?.toFixed(2) ?? 0)
             }
           />
           <OverviewSelectBox
@@ -111,6 +134,40 @@ const Overview = () => {
             }
           />
         </div>
+      </div>
+
+      <div className="flex-1">
+        <ResponsiveContainer width="100%">
+          <LineChart
+            data={chartsData}
+            margin={{
+              top: 20,
+              right: 0,
+              left: 0,
+              bottom: 35,
+            }}
+          >
+            <CartesianGrid vertical={false} stroke="#c2c5ce" />
+            <XAxis
+              dataKey="name"
+              tickLine={false}
+              style={{
+                fontSize: "10px",
+              }}
+            />
+            <YAxis
+              tickLine={false}
+              orientation="left"
+              yAxisId="left"
+              axisLine={false}
+              style={{
+                fontSize: "10px",
+              }}
+            />
+            <Tooltip />
+            <Line yAxisId="left" type="monotone" dataKey="earned" />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
     </main>
   );
