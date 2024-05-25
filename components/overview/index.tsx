@@ -47,11 +47,14 @@ const Overview = () => {
 
   const chartsData = useMemo(() => {
     return (
+      // @ts-ignore
       kpisData.history &&
+      // @ts-ignore
       Object.entries(kpisData.history)
         .sort((a, b) => months.indexOf(a[0]) - months.indexOf(b[0]))
         .map(([key, value]) => ({
           name: key,
+          // @ts-ignore
           earned: value.totalEarned,
         }))
     );
