@@ -1,3 +1,5 @@
+import Overview from "@/components/overview";
+
 export default async function Home() {
-  return <div>Overview</div>;
+  return <Overview />;
 }

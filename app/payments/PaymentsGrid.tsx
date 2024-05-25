@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 const PaymentsGrid = () => {
   const [pageState, setPageState] = useState<PageState>({
-    isLoading: false,
+    isLoading: true,
     data: [],
   });
   const [paginationModel, setPaginationModel] = useState({
